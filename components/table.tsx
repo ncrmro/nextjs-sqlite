@@ -11,7 +11,8 @@ export default async function Table() {
   try {
     users = await db.selectFrom('users').selectAll().execute()
   } catch (e: any) {
-    if (e.message === `relation "users" does not exist`) {
+    console.log('ERR', e.message)
+    if (e.message === `no such table: users`) {
       console.log(
         'Table does not exist, creating and seeding it with dummy data now...'
       )
