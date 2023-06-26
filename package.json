@@ -8,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrations": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' lib/migrations.ts"
   },
   "dependencies": {
     "@types/node": "18.15.11",
@@ -30,6 +31,8 @@
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.4",
     "@types/ms": "^0.7.31",
+    "prettier": "^2.8.8",
+    "ts-node": "^10.9.1",
     "turbo": "^1.9.3"
   }
 }
