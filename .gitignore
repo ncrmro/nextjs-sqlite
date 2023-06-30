@@ -39,3 +39,6 @@ yarn-error.log*
 *.tsbuildinfo
 
 sqlite3.db*
+/test-results/
+/playwright-report/
+/playwright/.cache/
