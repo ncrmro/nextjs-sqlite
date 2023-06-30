@@ -14,7 +14,8 @@ export namespace Tables {
     // using the `Generated` type. This way they are automatically
     // made optional in inserts and updates.
     id: Generated<number>;
-    name: string;
+    first_name: string;
+    last_name: string;
     email: string;
     image: string;
 
