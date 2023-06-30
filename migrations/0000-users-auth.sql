@@ -5,7 +5,7 @@ CREATE TABLE users
     username   text UNIQUE,
     first_name text,
     last_name  text,
-    email      text,
+    email      text NOT NULL check(email regexp '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'),
     image      text,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL

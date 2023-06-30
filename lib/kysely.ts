@@ -10,6 +10,9 @@ export interface Database {
 
 export const sqlite = new SQLiteDatabase("sqlite3.db");
 sqlite.pragma("journal_mode = WAL");
+sqlite.function("regexp", { deterministic: true }, (regex, text) =>
+  new RegExp(regex as string).test(text as string) ? 1 : 0
+);
 
 // You'd create one of these when you start your app.
 export const db = new Kysely<Database>({
