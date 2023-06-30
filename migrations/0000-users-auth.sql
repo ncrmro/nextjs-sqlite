@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
-    id         int PRIMARY KEY,
+    id         integer NOT NULL PRIMARY KEY,
     username   text UNIQUE,
     first_name text,
     last_name  text,

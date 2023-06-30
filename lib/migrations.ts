@@ -5,7 +5,7 @@ import * as crypto from "crypto";
 const migrationsTable = `
     CREATE TABLE IF NOT EXISTS migrations
     (
-        id         integer PRIMARY KEY,
+        id         integer                             NOT NULL PRIMARY KEY,
         filename   text                                NOT NULL UNIQUE,
         sha        text                                NOT NULL UNIQUE,
         created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -34,7 +34,7 @@ function sha256(content: string) {
   return crypto.createHash("sha256").update(content).digest("hex");
 }
 
-function log(message: string) {
+function log(message: TemplateStringsArray, ...values: any[]) {
   console.info(`MIG: ${message}`);
 }
 
@@ -65,7 +65,7 @@ async function runMigrations() {
       );
     } else if (!committedSHA) {
       uptoDate = false;
-      log(`Running migration ${migrationFilename} `);
+      log`Running migration ${migrationFilename}`;
       const query = `
         BEGIN TRANSACTION;
         ${migration}
@@ -78,6 +78,19 @@ async function runMigrations() {
   }
 }
 
-runMigrations().then(() =>
-  uptoDate ? log("Already up to date") : log("Finished migrations")
-);
+async function seed() {
+  log`Running seeds`;
+  const seeds = await fs.readdir("seeds");
+  for (const filename of seeds.sort()) {
+    const seed = await fs.readFile(`seeds/${filename}`, "utf8");
+    sqlite.exec(seed);
+  }
+}
+
+async function main() {
+  await runMigrations();
+  uptoDate ? log`Already up to date` : log`Finished migrations`;
+  await seed();
+}
+
+main().then(() => {});
