@@ -9,6 +9,13 @@ sqlite.function("regexp", { deterministic: true }, (regex, text) =>
   new RegExp(regex as string).test(text as string) ? 1 : 0
 );
 sqlite.function("uuid", () => crypto.randomUUID());
+sqlite.function("slugify", { deterministic: true }, (text) => {
+  if (typeof text !== "string") throw new Error("Argument was not a string");
+  return text
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+});
 
 // You'd create one of these when you start your app.
 export const db = new Kysely<Database>({
