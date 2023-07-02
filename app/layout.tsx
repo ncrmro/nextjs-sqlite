@@ -1,26 +1,32 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import "./globals.css";
+import Link from "next/link";
+import React from "react";
+import "./global.css";
 
 export const metadata = {
-  title: 'Vercel Postgres Demo with Kysely',
+  title: "Vercel Postgres Demo with Kysely",
   description:
-    'A simple Next.js app with Vercel Postgres as the database and Kysely as the ORM',
-}
-
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-  display: 'swap',
-})
+    "A simple Next.js app with Vercel Postgres as the database and Kysely as the ORM",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.variable}>{children}</body>
+      <body>
+        <nav id="navbar" className="flex justify-between w-full">
+          <div>
+            <Link href="/">NSLITE</Link>
+          </div>
+          <div>
+            <Link href="/login">Sign in</Link>
+          </div>
+        </nav>
+        <main className="w-full flex-col items-center p-4">{children}</main>
+      </body>
     </html>
-  )
+  );
 }

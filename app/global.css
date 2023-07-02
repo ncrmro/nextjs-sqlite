@@ -1,0 +1,300 @@
+/* https://material.io/design/color/the-color-system.html#color-theme-creation */
+:root {
+  font-family: Helvetica Neue, sans-serif;
+  --background: #fff;
+  --onBackground: #121212;
+  --surface: #fff;
+  --onSurface: #000000;
+  --onSurfaceRGB: 255, 255, 255;
+  --onPrimary: black;
+  --primary: #5b5b5b;
+  --secondary: red;
+  /*Set text to white by default*/
+  color: var(--onBackground);
+}
+
+html,
+body {
+  background-color: var(--background);
+  margin: 0;
+}
+
+#navbar {
+  background: var(--surface);
+  align-items: center;
+  height: 3.5em;
+}
+
+#navbar div {
+  display: flex;
+  align-content: center;
+}
+
+a {
+  color: var(--onSurface);
+}
+
+#navbar a {
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  padding: 0 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+#navbar a.active {
+  text-decoration: underline;
+}
+
+main {
+  min-height: calc(100vh - 100px);
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+footer {
+  height: 4rem;
+  background: var(--surface);
+  text-transform: uppercase;
+  box-sizing: border-box;
+}
+
+#footer-social-links {
+  position: absolute;
+  right: 32px;
+}
+
+@media only screen and (max-width: 600px) {
+  footer {
+    flex-direction: column;
+  }
+
+  #footer-social-links {
+    position: unset;
+    right: 32px;
+  }
+}
+
+footer a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: uppercase;
+}
+
+button {
+  padding: 14px 0;
+  background-color: var(--primary);
+  width: 265px;
+  color: var(--onPrimary);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  border: 0;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+form {
+  /*use class if needs to be wider that this*/
+  max-width: 600px;
+  background: var(--surface);
+  gap: 1rem;
+}
+
+input {
+  padding: 12px 12px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Begin utility classes (tailwind styles) */
+.button-sm {
+  width: 128px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.float-right {
+  float: right;
+}
+
+.gap-4 {
+  gap: 1em;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.p-4 {
+  padding: 1em;
+}
+
+.justify-items-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* End utility classes (tailwind styles) */
+
+.stepper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  width: 100%;
+}
+
+.stepper li {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.stepper-active-step {
+  border-bottom: solid;
+}
+
+.icon-button {
+  all: initial;
+  cursor: pointer;
+}
+
+.surface {
+  background: var(--surface);
+}
+
+.table {
+  width: 100%;
+  background: var(--surface);
+  border-collapse: collapse;
+}
+
+.table th,
+td {
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  vertical-align: inherit;
+  text-align: left;
+  padding: 16px;
+}
+
+/* alternate colors */
+/*.table tr {*/
+/*  border: solid rgba(var(--onSurfaceRGB), 12%);*/
+/*}*/
+
+.table thead {
+  font-weight: 500;
+  line-height: 1.5rem;
+  color: rgba(var(--onSurfaceRGB), 80%);
+}
+
+.table td,
+.table th {
+  background-color: var(--background);
+  color: var(--onBackground);
+  border: 1px solid rgba(var(--onSurfaceRGB), 12%);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.table tr:first-child th {
+  border-top: 0;
+}
+
+.table tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tr td:first-child,
+.table tr th:first-child {
+  border-left: 0;
+}
+
+.table tr td:last-child,
+.table tr th:last-child {
+  border-right: 0;
+}
+
+/*.table a {*/
+/*  color: var(--onPrimary);*/
+/*}*/
+
+.table th {
+  color: var(--primary);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  background: var(--surface);
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  color: var(--onSurface);
+}
+
+.card-header a {
+  text-decoration: none;
+}
+
+.card-content {
+}
