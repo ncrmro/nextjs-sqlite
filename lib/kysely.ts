@@ -1,18 +1,14 @@
-import { Kysely, SqliteDialect } from "kysely";
+import { Kysely, SqliteDialect, Transaction as KTransaction } from "kysely";
 import { default as SQLiteDatabase } from "better-sqlite3";
-import { Tables } from "@/lib/tables";
-
-// Keys of this interface are table names.
-export interface Database {
-  migrations: Tables.Migration;
-  users: Tables.User;
-}
+import { Database } from "@/lib/tables";
+import * as crypto from "crypto";
 
 export const sqlite = new SQLiteDatabase("sqlite3.db");
 sqlite.pragma("journal_mode = WAL");
 sqlite.function("regexp", { deterministic: true }, (regex, text) =>
   new RegExp(regex as string).test(text as string) ? 1 : 0
 );
+sqlite.function("uuid", () => crypto.randomUUID());
 
 // You'd create one of these when you start your app.
 export const db = new Kysely<Database>({
