@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  handleSession,
-  Passwords,
-  selectSessionCookieUser,
-  useViewer,
-} from "@/lib/auth";
+import { handleSession, Passwords, useViewer } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/kysely";
 
@@ -30,7 +25,7 @@ export default async function SignupPage(props: {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const viewer = await selectSessionCookieUser();
+  const viewer = await useViewer();
   if (viewer) redirect("/dashboard");
   const error = props.searchParams.error;
 

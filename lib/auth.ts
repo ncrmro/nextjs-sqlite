@@ -45,7 +45,7 @@ export async function handleSession(userId: string) {
   });
 }
 
-export async function selectSessionCookieUser() {
+export async function useViewer() {
   const session = cookies().get("viewer_session")?.value;
   if (session) {
     return await db
@@ -55,10 +55,4 @@ export async function selectSessionCookieUser() {
       .where("sessions.id", "=", session)
       .executeTakeFirst();
   }
-}
-
-export async function useViewer() {
-  const user = await selectSessionCookieUser();
-  if (!user) redirect("/login");
-  return user;
 }

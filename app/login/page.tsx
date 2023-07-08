@@ -1,9 +1,4 @@
-import {
-  handleSession,
-  Passwords,
-  selectSessionCookieUser,
-  useViewer,
-} from "@/lib/auth";
+import { handleSession, Passwords, useViewer } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { db } from "@/lib/kysely";
@@ -28,7 +23,7 @@ async function loginUser(data: Map<string, string>) {
 }
 
 export default async function LoginPage() {
-  const viewer = await selectSessionCookieUser();
+  const viewer = await useViewer();
   if (viewer) redirect("/dashboard");
 
   return (
