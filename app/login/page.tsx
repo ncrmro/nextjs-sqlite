@@ -2,6 +2,7 @@ import { handleSession, Passwords, useViewer } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { db } from "@/lib/kysely";
+import { headers } from "next/headers";
 
 async function loginUser(data: Map<string, string>) {
   "use server";
@@ -22,9 +23,22 @@ async function loginUser(data: Map<string, string>) {
   }
 }
 
+function parseRedirectParam() {
+  const referer = headers().get("referer");
+  if (referer) {
+    const url = new URL(referer);
+    return url.searchParams.get("redirect");
+  }
+}
+
 export default async function LoginPage() {
   const viewer = await useViewer();
-  if (viewer) redirect("/dashboard");
+  const redirectPram = parseRedirectParam();
+  if (viewer && redirectPram) {
+    redirect(redirectPram);
+  } else if (viewer) {
+    redirect("/dashboard");
+  }
 
   return (
     // @ts-ignore

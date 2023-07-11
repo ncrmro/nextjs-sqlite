@@ -21,3 +21,16 @@ test("sign up page", async ({ page }) => {
   await page.locator("button", { hasText: "Submit" }).click();
   await page.waitForURL("/dashboard");
 });
+
+test("create posts", async ({ page }) => {
+  page.on("console", console.log);
+  await page.goto("/posts/new");
+  await page.waitForURL((url) =>
+    url.toString().includes("/login?redirect=%2Fposts%2Fnew")
+  );
+  const email = `jdoe@example.com`;
+  await page.getByPlaceholder("email").fill(email);
+  await page.getByPlaceholder("password").fill("password");
+  await page.locator("button", { hasText: "Login" }).click();
+  await page.waitForURL("/posts/new");
+});
