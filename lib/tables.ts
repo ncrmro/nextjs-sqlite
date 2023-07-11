@@ -37,9 +37,21 @@ interface Session {
   updated_at: ColumnType<Date, string | undefined, never>;
 }
 
+interface Posts {
+  id: Generated<string>;
+  user_id: Generated<string>;
+  title: string;
+  body: string;
+  published: ColumnType<boolean, boolean | undefined>;
+  slug: ColumnType<string, string | undefined>;
+  created_at: ColumnType<Date, string | undefined, never>;
+  updated_at: ColumnType<Date, string | undefined, never>;
+}
+
 // Keys of this interface are table names.
 export interface Database {
   migrations: Migration;
   users: User;
   sessions: Session;
+  posts: Posts;
 }

@@ -1,15 +1,23 @@
 DROP TABLE IF EXISTS posts;
 CREATE TABLE posts
 (
-    id         text                                NOT NULL PRIMARY KEY DEFAULT (uuid()),
-    user_id    int                                 NOT NULL,
-    title      text                                NOT NULL,
-    body       text                                NOT NULL,
-    slug       text,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    id           text                                NOT NULL PRIMARY KEY DEFAULT (uuid()),
+    user_id      int                                 NOT NULL,
+    title        text                                NOT NULL UNIQUE,
+    body         text                                NOT NULL,
+    slug         text UNIQUE,
+    published    integer   DEFAULT FALSE,
+    publish_date TIMESTAMP,
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
+CREATE INDEX posts_user
+    ON posts (user_id);
+
+CREATE INDEX posts_published
+    ON posts (published);
 
 CREATE TRIGGER posts_insert_timestamp_trigger
     AFTER INSERT
