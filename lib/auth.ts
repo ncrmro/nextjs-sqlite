@@ -45,7 +45,7 @@ export async function handleSession(userId: string) {
   });
 }
 
-export async function useViewer() {
+export async function selectSessionViewer() {
   const session = cookies().get("viewer_session")?.value;
   if (session) {
     return await db
@@ -55,4 +55,8 @@ export async function useViewer() {
       .where("sessions.id", "=", session)
       .executeTakeFirst();
   }
+}
+
+export async function useViewer() {
+  return selectSessionViewer();
 }
