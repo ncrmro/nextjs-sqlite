@@ -43,7 +43,10 @@ interface Posts {
   title: string;
   body: string;
   published: ColumnType<boolean, boolean | undefined>;
-  slug: ColumnType<string, string | undefined>;
+  /* Slug must be passed in on insert because before insert trigger 
+          doesn't work great in sqlite, updates the trigger works automatically 
+       */
+  slug: string;
   created_at: ColumnType<Date, string | undefined, never>;
   updated_at: ColumnType<Date, string | undefined, never>;
 }

@@ -116,7 +116,7 @@ form {
   gap: 1rem;
 }
 
-input {
+input, textarea {
   padding: 12px 12px;
 }
 

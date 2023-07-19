@@ -1,6 +1,7 @@
 import { db } from "@/lib/kysely";
 import { selectSessionViewer, useViewer } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { slugify } from "@/lib/utils";
 
 // Would be good to debounce and check the title for uniqueness
 
@@ -8,16 +9,19 @@ async function createPost(data: FormData) {
   "use server";
   const viewer = await selectSessionViewer();
   if (!viewer) throw new Error("Viewer must not be null when creating a post");
+  const title = data.get("title");
+  if (typeof title !== "string") throw new Error("Title must be a string");
 
   const post = await db
     .insertInto("posts")
     .values({
       title: data.get("title"),
       body: data.get("body"),
-      published: data.get("published"),
+      published: 1,
       user_id: viewer.id,
+      slug: slugify(title),
     })
-    .returning("slug")
+    .returning(["title", "slug", "published"])
     .executeTakeFirstOrThrow();
   redirect(`/posts/${post.slug}`);
 }

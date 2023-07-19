@@ -5,7 +5,7 @@ CREATE TABLE posts
     user_id      int                                 NOT NULL,
     title        text                                NOT NULL UNIQUE,
     body         text                                NOT NULL,
-    slug         text UNIQUE,
+    slug         text UNIQUE                         NOT NULL CHECK (slug REGEXP '^[\w-]*$'),
     published    integer   DEFAULT FALSE,
     publish_date TIMESTAMP,
     created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -35,7 +35,7 @@ BEGIN
 END;
 
 CREATE TRIGGER posts_insert_slugify_title
-    AFTER INSERT
+    BEFORE INSERT
     ON posts
 BEGIN
     UPDATE posts SET slug = slugify(title);
@@ -43,8 +43,8 @@ END;
 
 
 CREATE TRIGGER posts_update_slugify_title
-    AFTER UPDATE
+    BEFORE UPDATE
     ON posts
 BEGIN
-    UPDATE posts SET slug = slugify(title);
+    UPDATE posts SET slug = slugify(title) WHERE id = new.id;
 END;

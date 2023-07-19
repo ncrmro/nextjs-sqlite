@@ -2,6 +2,10 @@ import { Kysely, SqliteDialect, Transaction as KTransaction } from "kysely";
 import { default as SQLiteDatabase } from "better-sqlite3";
 import { Database } from "@/lib/tables";
 import * as crypto from "crypto";
+/*
+  slugify needs to be a relative import here
+ */
+import { slugify } from "./utils";
 
 export const sqlite = new SQLiteDatabase("sqlite3.db");
 sqlite.pragma("journal_mode = WAL");
@@ -11,10 +15,7 @@ sqlite.function("regexp", { deterministic: true }, (regex, text) =>
 sqlite.function("uuid", () => crypto.randomUUID());
 sqlite.function("slugify", { deterministic: true }, (text) => {
   if (typeof text !== "string") throw new Error("Argument was not a string");
-  return text
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
+  return slugify(text);
 });
 
 // You'd create one of these when you start your app.

@@ -33,4 +33,9 @@ test("create posts", async ({ page }) => {
   await page.getByPlaceholder("password").fill("password");
   await page.locator("button", { hasText: "Login" }).click();
   await page.waitForURL("/posts/new");
+  const postTitle = `Hello World ${Date.now()}`;
+  await page.getByLabel("Title").fill(postTitle);
+  await page.getByLabel("Body").fill("Hello World");
+  await page.locator("button", { hasText: "Submit" }).click();
+  await page.waitForURL(/\/posts\/hello-world-\d*/);
 });
