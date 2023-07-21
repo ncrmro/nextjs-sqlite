@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrations": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' lib/migrations.ts && pnpm run typegen",
+    "migrations": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' lib/migrations.ts && DATABASE_URL=sqlite3.db kysely-codegen",
     "test": "playwright test",
     "typegen": "DATABASE_URL=sqlite3.db kysely-codegen"
   },
