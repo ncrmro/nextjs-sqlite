@@ -6,7 +6,7 @@ CREATE TABLE posts
     title        text                                NOT NULL UNIQUE,
     body         text                                NOT NULL,
     slug         text UNIQUE                         NOT NULL CHECK (slug REGEXP '^[\w-]*$'),
-    published    integer   DEFAULT FALSE,
+    published    integer   NOT NULL DEFAULT FALSE,
     publish_date TIMESTAMP,
     created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
