@@ -1,4 +1,4 @@
-import { db, sql, sqlite } from "./kysely";
+import { db, sqlite } from "./kysely";
 import fs from "fs/promises";
 import * as crypto from "crypto";
 
@@ -43,6 +43,7 @@ let uptoDate = true;
 async function runMigrations() {
   sqlite.exec(migrationsTable);
   const [committedMigrations, migrationFilenames] = await Promise.all([
+    // @ts-ignore
     db.selectFrom("migrations").select(["id", "filename", "sha"]).execute(),
     fs.readdir("migrations"),
   ]);
