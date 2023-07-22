@@ -4,7 +4,8 @@ metadata:
   name: sqlite-database
 spec:
   accessModes:
-  - ReadWriteMany
+  # volume can be mounted as read-write by a single node
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

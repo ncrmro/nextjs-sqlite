@@ -40,3 +40,13 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: DATABASE_PATH
+              value: /database
+          volumeMounts:
+          - mountPath: /database
+            name: sqlite-database
+      volumes:
+      - name: sqlite-database
+        persistentVolumeClaim:
+          claimName: sqlite-database
