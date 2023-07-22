@@ -5,13 +5,13 @@ name: Build and Push Image
 # - A tag starting with "v" is created
 # - A pull request is created or updated
 on:
-  push:
-    branches: [ main ]
-#  workflow_run:
-#    workflows: ["Playwright Tests"]
-#    branches: [main]
-#    types:
-#      - completed
+#  push:
+#    branches: [ main ]
+  workflow_run:
+    workflows: ["Playwright Tests"]
+    branches: [main]
+    types:
+      - completed
 env:
   IMAGE_NAME: $GITHUB_RUN_ID
 #
@@ -39,6 +39,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ github.run_id }}-${{ env.SHORT_SHA }}
-          cache-from: type=registry,ref=user/app:latest
+          tags: ghcr.io/${{ github.repository }}:latest,ghcr.io/${{ github.repository }}:${{ github.run_id }}-${{ env.SHORT_SHA }}
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:latest
           cache-to: type=inline
