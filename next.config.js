@@ -7,6 +7,7 @@ const nextConfig = {
     serverActions: true,
     typedRoutes: true,
   },
+  output: "standalone",
 };
 
 module.exports = nextConfig;
