@@ -28,6 +28,7 @@ COPY --link  . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+# We run migrations here so that we can run kysely-codegen
 RUN yarn migrations && yarn build
 
 # If using npm comment out above and use below instead
