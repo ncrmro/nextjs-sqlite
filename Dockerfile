@@ -29,7 +29,7 @@ COPY --link  . .
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 # We run migrations here so that we can run kysely-codegen
-RUN yarn migrations && yarn build
+RUN yarn migrations && yarn build && yarn tsc --module nodenext lib/migrations.ts --outDir dist
 
 # If using npm comment out above and use below instead
 # RUN npm run build
@@ -50,6 +50,7 @@ COPY --from=builder --link /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --link --chown=1001:1001 /app/dist ./dist
 COPY --from=builder --link --chown=1001:1001 /app/.next/standalone ./
 COPY --from=builder --link --chown=1001:1001 /app/.next/static ./.next/static
 

@@ -91,7 +91,8 @@ async function seed() {
 async function main() {
   await runMigrations();
   uptoDate ? log`Already up to date` : log`Finished migrations`;
-  await seed();
+  // TODO seeds need to not run in prod
+  // await seed();
 }
 
 main().then(() => {});

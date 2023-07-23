@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "nextjs-sqlite.fullname" . }}-migrations-{{ .Values.image.tag }}
+  labels:
+    {{- include "nextjs-sqlite.labels" . | nindent 4 }}
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-5"
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+        - name: unsupervised-gcr-io
+      restartPolicy: Never
+      containers:
+        - name: migrations
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ['node']
+          args: ["/app/dist/migrations"]
+          env:
+            - name: DATABASE_PATH
+              value: /database
+
