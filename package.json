@@ -9,11 +9,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NEXT_MANUAL_SIG_HANDLE=true next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrations": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' lib/migrations.ts && DATABASE_URL=sqlite3.db kysely-codegen",
+    "migrations": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' lib/migrations.ts --seed && DATABASE_URL=sqlite3.db kysely-codegen",
     "test": "playwright test",
     "typegen": "DATABASE_URL=sqlite3.db kysely-codegen"
   },

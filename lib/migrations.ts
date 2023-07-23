@@ -80,11 +80,13 @@ async function runMigrations() {
 }
 
 async function seed() {
-  log`Running seeds`;
-  const seeds = await fs.readdir("seeds");
-  for (const filename of seeds.sort()) {
-    const seed = await fs.readFile(`seeds/${filename}`, "utf8");
-    sqlite.exec(seed);
+  if (process.argv.find((arg) => arg === "--seed")) {
+    log`Running seeds`;
+    const seeds = await fs.readdir("seeds");
+    for (const filename of seeds.sort()) {
+      const seed = await fs.readFile(`seeds/${filename}`, "utf8");
+      sqlite.exec(seed);
+    }
   }
 }
 
@@ -92,7 +94,7 @@ async function main() {
   await runMigrations();
   uptoDate ? log`Already up to date` : log`Finished migrations`;
   // TODO seeds need to not run in prod
-  // await seed();
+  await seed();
 }
 
 main().then(() => {});
