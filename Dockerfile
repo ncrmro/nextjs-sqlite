@@ -52,6 +52,8 @@ COPY --from=builder --link /app/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --link --chown=1001:1001 /app/dist ./dist
 COPY --from=builder --link --chown=1001:1001 /app/.next/standalone ./
+# nextjs trace doesn't copy the kysely dependency which is needed during migrations
+COPY --from=builder --link --chown=1001:1001 /app/node_modules/kysely ./node_modules/kysely
 COPY --from=builder --link --chown=1001:1001 /app/.next/static ./.next/static
 
 USER nextjs
