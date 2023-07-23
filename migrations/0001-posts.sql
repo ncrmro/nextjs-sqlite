@@ -19,13 +19,6 @@ CREATE INDEX posts_user
 CREATE INDEX posts_published
     ON posts (published);
 
-CREATE TRIGGER posts_insert_timestamp_trigger
-    AFTER INSERT
-    ON posts
-BEGIN
-    UPDATE posts SET created_at = CURRENT_TIMESTAMP WHERE id = new.id;
-END;
-
 
 CREATE TRIGGER posts_update_timestamp_trigger
     AFTER UPDATE
