@@ -1,6 +1,6 @@
 import PostForm from "@/app/posts/form";
 import { selectSessionViewer } from "@/lib/auth";
-import { db } from "@/lib/kysely";
+import { db } from "@/lib/database";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 

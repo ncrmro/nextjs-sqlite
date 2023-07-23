@@ -1,8 +1,7 @@
-import { scrypt, randomBytes, timingSafeEqual, createHmac } from "crypto";
+import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
-import { db } from "@/lib/kysely";
+import { db } from "@/lib/database";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export namespace Passwords {
   // scrypt is callback based so with promisify we can await it

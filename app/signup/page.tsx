@@ -1,7 +1,7 @@
 import React from "react";
 import { handleSession, Passwords, useViewer } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { db } from "@/lib/kysely";
+import { db } from "@/lib/database";
 
 async function registerUser(data: Map<string, string>) {
   "use server";

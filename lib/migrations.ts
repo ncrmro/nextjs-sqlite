@@ -1,4 +1,4 @@
-import { db, sqlite } from "./kysely";
+import { db, sqlite } from "./database";
 import fs from "fs/promises";
 import * as crypto from "crypto";
 

@@ -1,4 +1,4 @@
-import { db } from "@/lib/kysely";
+import { db } from "@/lib/database";
 import { timeAgo } from "@/lib/utils";
 import Image from "next/image";
 import RefreshButton from "./refresh-button";

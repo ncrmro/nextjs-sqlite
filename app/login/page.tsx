@@ -1,7 +1,7 @@
 import { handleSession, Passwords, useViewer } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { db } from "@/lib/kysely";
+import { db } from "@/lib/database";
 import { headers } from "next/headers";
 
 async function loginUser(data: Map<string, string>) {

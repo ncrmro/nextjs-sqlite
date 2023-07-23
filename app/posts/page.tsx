@@ -1,4 +1,4 @@
-import { db } from "@/lib/kysely";
+import { db } from "@/lib/database";
 import Link from "next/link";
 
 export default async function Posts() {

@@ -1,4 +1,4 @@
-import { db } from "@/lib/kysely";
+import { db } from "@/lib/database";
 import { selectSessionViewer, useViewer } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { slugify } from "@/lib/utils";

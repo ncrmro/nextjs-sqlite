@@ -1,4 +1,4 @@
-import { Kysely, SqliteDialect, Transaction as KTransaction } from "kysely";
+import { Kysely, SqliteDialect } from "kysely";
 import { default as SQLiteDatabase } from "better-sqlite3";
 import { DB } from "kysely-codegen";
 import * as crypto from "crypto";
