@@ -9,6 +9,13 @@ export default async function EditPostPage({
 }: {
   params: { slug: string };
 }) {
+  const viewer = await selectSessionViewer();
+  if (!viewer)
+    redirect(
+      `/login?${new URLSearchParams({
+        redirect: `/posts/${params.slug}/edit`,
+      }).toString()}`
+    );
   const post = await db
     .selectFrom("posts")
     .select(["title", "body", "slug", "published"])
@@ -17,16 +24,9 @@ export default async function EditPostPage({
 
   async function editPost(data: FormData) {
     "use server";
-    const viewer = await selectSessionViewer();
     if (!viewer)
       throw new Error("Viewer must not be null when creating a post");
 
-    console.log("", {
-      title: data.get("title") as string,
-      body: data.get("body") as string,
-      // published: 1,
-      user_id: viewer.id,
-    });
     const post = await db
       .updateTable("posts")
       .set({
