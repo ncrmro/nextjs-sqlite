@@ -23,4 +23,10 @@ spec:
           env:
             - name: DATABASE_PATH
               value: /database
-
+          volumeMounts:
+          - mountPath: /database
+            name: sqlite-database
+      volumes:
+      - name: sqlite-database
+        persistentVolumeClaim:
+          claimName: sqlite-database
