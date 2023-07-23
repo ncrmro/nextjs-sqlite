@@ -47,6 +47,7 @@ RUN \
   adduser --system --uid 1001 nextjs
 
 COPY --from=builder --link /app/public ./public
+COPY --link  ./migrations ./migrations
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
