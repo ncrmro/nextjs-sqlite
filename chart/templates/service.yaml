@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "nextjs-sqlite.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
     - port: 3000
       targetPort: http

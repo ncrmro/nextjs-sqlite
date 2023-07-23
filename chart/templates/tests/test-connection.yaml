@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "nextjs-sqlite.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "nextjs-sqlite.fullname" . }}:3000
   restartPolicy: Never
