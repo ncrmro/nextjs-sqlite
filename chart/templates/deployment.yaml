@@ -44,7 +44,7 @@ spec:
             - name: DATABASE_PATH
               value: /database
           volumeMounts:
-          - mountPath: /database
+          - mountPath: /database/sqlite3.db
             name: sqlite-database
       volumes:
       - name: sqlite-database

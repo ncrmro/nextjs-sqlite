@@ -36,6 +36,13 @@ RUN yarn migrations && yarn build && yarn tsc --module nodenext lib/migrations.t
 
 # Production image, copy all the files and run next
 FROM base AS runner
+
+# Better better sqlite support, about 57mb.
+RUN \
+   apk add --no-cache python3 py3-pip; \
+   pip install --no-cache-dir litecli; \
+   apk del py3-pip; \
+
 WORKDIR /app
 
 ENV NODE_ENV=production PORT=3000 HOSTNAME=localhost

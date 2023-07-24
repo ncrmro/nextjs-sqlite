@@ -16,3 +16,8 @@ pnpm dev
 ```bash
 pnpm Test
 ```
+
+# SQLite CLI access
+
+Sqlite3 CLI access is provided by [betterlite](https://litecli.com/)
+

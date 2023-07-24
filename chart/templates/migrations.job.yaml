@@ -20,7 +20,7 @@ spec:
           args: ["/app/dist/migrations"]
           env:
             - name: DATABASE_PATH
-              value: /database
+              value: /database/sqlite3.db
           volumeMounts:
           - mountPath: /database
             name: sqlite-database

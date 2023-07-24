@@ -15,7 +15,8 @@
     "lint": "next lint",
     "migrations": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' lib/migrations.ts --seed && DATABASE_URL=sqlite3.db kysely-codegen",
     "test": "playwright test",
-    "typegen": "DATABASE_URL=sqlite3.db kysely-codegen"
+    "typegen": "DATABASE_URL=sqlite3.db kysely-codegen",
+    "db": "litecli ${DATABASE_PATH:-sqlite3.db}"
   },
   "dependencies": {
     "@types/node": "18.15.11",
