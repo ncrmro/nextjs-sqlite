@@ -41,7 +41,7 @@ FROM base AS runner
 RUN \
    apk add --no-cache python3 py3-pip; \
    pip install --no-cache-dir litecli; \
-   apk del py3-pip; \
+   apk del py3-pip
 
 WORKDIR /app
 
