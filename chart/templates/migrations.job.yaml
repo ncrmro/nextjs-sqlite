@@ -13,6 +13,17 @@ spec:
   template:
     spec:
       restartPolicy: Never
+      initContainers:
+        - name: chown-database-dir
+          image: busybox:latest
+          command:
+            - /bin/chown
+            - -R
+            - "10001:10001"  # or whatever the mongo UID is, use string "1000" not 1000 due to yaml
+            - /database
+          volumeMounts:
+          - mountPath: /database
+            name: sqlite-database
       containers:
         - name: migrations
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

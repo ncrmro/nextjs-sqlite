@@ -50,19 +50,19 @@ ENV NODE_ENV=production PORT=3000 HOSTNAME=localhost
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN \
-  addgroup --system --gid 1001 nodejs; \
-  adduser --system --uid 1001 nextjs
+  addgroup --system --gid 10001 nodejs; \
+  adduser --system --uid 10001 nextjs
 
 COPY --from=builder --link /app/public ./public
 COPY --link  ./migrations ./migrations
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --link --chown=1001:1001 /app/dist ./dist
-COPY --from=builder --link --chown=1001:1001 /app/.next/standalone ./
+COPY --from=builder --link --chown=10001:10001 /app/dist ./dist
+COPY --from=builder --link --chown=10001:10001 /app/.next/standalone ./
 # nextjs trace doesn't copy the kysely dependency which is needed during migrations
-COPY --from=builder --link --chown=1001:1001 /app/node_modules/kysely ./node_modules/kysely
-COPY --from=builder --link --chown=1001:1001 /app/.next/static ./.next/static
+COPY --from=builder --link --chown=10001:10001 /app/node_modules/kysely ./node_modules/kysely
+COPY --from=builder --link --chown=10001:10001 /app/.next/static ./.next/static
 
 USER nextjs
 

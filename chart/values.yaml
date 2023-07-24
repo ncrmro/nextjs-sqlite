@@ -21,7 +21,7 @@ securityContext:
      - ALL
    readOnlyRootFilesystem: true
    runAsNonRoot: true
-   runAsUser: 1001
+   runAsUser: 10001
 
 ingress:
   enabled: false
