@@ -2,7 +2,8 @@
 
 Why you might choose to use this.
 
-Simple auth, simple database
+* SQLite KISS Database
+* [Database CLI access](#sqlite-cli-access) 
 
 --- 
 
