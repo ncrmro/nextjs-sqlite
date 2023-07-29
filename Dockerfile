@@ -29,10 +29,8 @@ COPY --link  . .
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 # We run migrations here so that we can run kysely-codegen
-RUN yarn migrations && yarn build && yarn tsc --module nodenext lib/migrations.ts --outDir dist
+RUN yarn build
 
-# If using npm comment out above and use below instead
-# RUN npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -54,11 +52,11 @@ RUN \
   adduser --system --uid 10001 nextjs
 
 COPY --from=builder --link /app/public ./public
-COPY --link  ./migrations ./migrations
+COPY --from=builder --link --chown=10001:10001 /app/database ./database
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --link --chown=10001:10001 /app/dist ./dist
+
 COPY --from=builder --link --chown=10001:10001 /app/.next/standalone ./
 # nextjs trace doesn't copy the kysely dependency which is needed during migrations
 COPY --from=builder --link --chown=10001:10001 /app/node_modules/kysely ./node_modules/kysely
