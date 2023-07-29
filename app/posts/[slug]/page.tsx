@@ -1,5 +1,6 @@
 import { db } from "@/lib/database";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function PostPage({
   params,
@@ -10,7 +11,10 @@ export default async function PostPage({
     .selectFrom("posts")
     .select(["title", "body", "slug"])
     .where("slug", "=", params.slug)
-    .executeTakeFirstOrThrow();
+    .executeTakeFirst();
+  if (!post) {
+    notFound();
+  }
   return (
     <div>
       <h1>{post.title}</h1>
