@@ -10,22 +10,17 @@ metadata:
     "helm.sh/hook": post-install,pre-upgrade
     "helm.sh/hook-weight": "-5"
 spec:
+  ttlSecondsAfterFinished: 120 # 2 minutes
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
-      initContainers:
-        - name: chown-database-dir
-          image: busybox:latest
-          command:
-            - /bin/chown
-            - -R
-            - "10001:10001"  # or whatever the mongo UID is, use string "1000" not 1000 due to yaml
-            - /database
-          volumeMounts:
-          - mountPath: /database
-            name: sqlite-database
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: migrations
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ['node']
           args: ["/app/dist/migrations"]

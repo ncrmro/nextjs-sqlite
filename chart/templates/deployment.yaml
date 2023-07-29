@@ -42,9 +42,9 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: DATABASE_PATH
-              value: /database
+              value: /database/sqlite3.db
           volumeMounts:
-          - mountPath: /database/sqlite3.db
+          - mountPath: /database
             name: sqlite-database
       volumes:
       - name: sqlite-database
