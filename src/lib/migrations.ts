@@ -12,21 +12,23 @@ const migrationsTable = `
         updated_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
     );
     CREATE TRIGGER IF NOT EXISTS migrations_insert_timestamp_trigger
-        AFTER INSERT
-        ON migrations
+        AFTER
+    INSERT
+    ON migrations
     BEGIN
-        UPDATE migrations
-        SET created_at = CURRENT_TIMESTAMP
-        WHERE id = new.id;
+    UPDATE migrations
+    SET created_at = CURRENT_TIMESTAMP
+    WHERE id = new.id;
     END;
 
     CREATE TRIGGER IF NOT EXISTS migrations_update_timestamp_trigger
-        AFTER UPDATE
+        AFTER
+    UPDATE
         ON migrations
     BEGIN
-        UPDATE migrations
-        SET created_at = old.created_at AND updated_at = CURRENT_TIMESTAMP
-        WHERE id = new.id;
+    UPDATE migrations
+    SET created_at = old.created_at AND updated_at = CURRENT_TIMESTAMP
+    WHERE id = new.id;
     END;
 `;
 
@@ -34,7 +36,7 @@ function sha256(content: string) {
   return crypto.createHash("sha256").update(content).digest("hex");
 }
 
-function log(message: TemplateStringsArray, ...values: any[]) {
+function log(message: string) {
   console.info(`MIG: ${message}`);
 }
 
@@ -45,7 +47,7 @@ async function runMigrations() {
   const [committedMigrations, migrationFilenames] = await Promise.all([
     // @ts-ignore
     db.selectFrom("migrations").select(["id", "filename", "sha"]).execute(),
-    fs.readdir("migrations"),
+    fs.readdir("database/migrations"),
   ]);
   const migrations = new Map(
     committedMigrations.map((row) => [row.filename, row])
@@ -53,7 +55,7 @@ async function runMigrations() {
 
   for (const migrationFilename of migrationFilenames.sort()) {
     const migration = await fs.readFile(
-      `migrations/${migrationFilename}`,
+      `database/migrations/${migrationFilename}`,
       "utf8"
     );
     const sha = sha256(migration);
@@ -66,7 +68,7 @@ async function runMigrations() {
       );
     } else if (!committedSHA) {
       uptoDate = false;
-      log`Running migration ${migrationFilename}`;
+      log(`Running migration ${migrationFilename}`);
       const query = `
         BEGIN TRANSACTION;
         ${migration}
@@ -81,10 +83,10 @@ async function runMigrations() {
 
 async function seed() {
   if (process.argv.find((arg) => arg === "--seed")) {
-    log`Running seeds`;
-    const seeds = await fs.readdir("seeds");
+    log(`Running seeds`);
+    const seeds = await fs.readdir("database/seeds");
     for (const filename of seeds.sort()) {
-      const seed = await fs.readFile(`seeds/${filename}`, "utf8");
+      const seed = await fs.readFile(`database/seeds/${filename}`, "utf8");
       sqlite.exec(seed);
     }
   }
@@ -92,9 +94,9 @@ async function seed() {
 
 async function main() {
   await runMigrations();
-  uptoDate ? log`Already up to date` : log`Finished migrations`;
+  uptoDate ? log(`Already up to date`) : log(`Finished migrations`);
   // TODO seeds need to not run in prod
   await seed();
 }
 
-main().then(() => {});
+main().then(async () => await db.destroy());

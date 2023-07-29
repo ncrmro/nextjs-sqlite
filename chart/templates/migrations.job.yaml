@@ -23,7 +23,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ['node']
-          args: ["/app/dist/migrations"]
+          args: ["/app/database/dist/migrations"]
           env:
             - name: DATABASE_PATH
               value: /database/sqlite3.db

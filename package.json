@@ -9,14 +9,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_MANUAL_SIG_HANDLE=true next dev",
-    "build": "next build",
+    "dev": "yarn build-migrations && yarn migrations && next dev",
+    "build": "yarn build-migrations && yarn migrations && next build",
     "start": "next start",
     "lint": "next lint",
-    "migrations": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' lib/migrations.ts --seed && DATABASE_URL=sqlite3.db kysely-codegen",
+    "migrations": "node database/dist/migrations.js --seed && DATABASE_URL=database/sqlite3.db kysely-codegen",
     "test": "playwright test",
     "typegen": "DATABASE_URL=sqlite3.db kysely-codegen",
-    "db": "litecli ${DATABASE_PATH:-sqlite3.db}"
+    "db": "litecli ${DATABASE_PATH:-database/sqlite3.db}",
+    "build-migrations": "tsc --module nodenext src/lib/migrations.ts --outDir database/dist"
   },
   "dependencies": {
     "@types/node": "18.15.11",
