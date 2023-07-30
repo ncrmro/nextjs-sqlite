@@ -41,6 +41,9 @@ jobs:
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
 
+    - name: Run build
+      run: pnpm run build
+
     - name: Run migrations
       run: pnpm run migrations
 
